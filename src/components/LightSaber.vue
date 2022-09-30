@@ -79,7 +79,6 @@ export default {
         speed: 100,
         scramble: 0.007 * 500 / blade_halo_total_length,
         color: this.color,
-        debug: true,
         vectors: vect
       });
     }

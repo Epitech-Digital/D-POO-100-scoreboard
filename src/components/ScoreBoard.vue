@@ -22,7 +22,10 @@ export default {
   },
   mounted() {
     this.updateScores();
-    setInterval(this.updateScores, process.env.VUE_APP_REFRESH_RATE * 60000) //VUE_APP_REFRESH_RATE must be in minutes
+    if (process.env.VUE_APP_REFRESH_RATE >= 1)
+      setInterval(this.updateScores, process.env.VUE_APP_REFRESH_RATE * 60000) //VUE_APP_REFRESH_RATE must be in minutes
+    else
+      console.warn('Refresh rate (VUE_APP_REFRESH_RATE) is too low or badly formatted. Scores will not automatically refresh')
   },
   methods:{
     updateScores: function () {

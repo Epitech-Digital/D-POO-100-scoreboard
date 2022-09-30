@@ -1,6 +1,6 @@
 <template>
   <div class="light-saber" style="display: flex; position: relative; height: 80px; overflow: visible">
-    <img class="handle" alt="lightsaber handle" src="@/assets/lightsaber-handle.svg" style="margin-block: auto; transform: translateY(-40px)">
+    <img class="handle" alt="lightsaber handle" src="@/assets/lightsaber-handle.svg" style="transform: translateY(-40px)">
     <canvas class="blade-halo" style="position: absolute;z-index: -2"/>
     <p class="team-name" style="text-align: start">{{ team }}</p>
     <div class="blade" style="left:0; height: 16px; position: absolute; z-index: -1; background-color: white; border-radius: 16px; transform: translateY(-50%)"></div>
@@ -42,7 +42,7 @@ export default {
         let blade_halo_total_length =  this.score > 0 ? this.score + 300 : 0;
       let handle_width = 150;
       let distance_between_waves = 100;
-      let quant = blade_halo_total_length / distance_between_waves;
+      let quant = Math.round(blade_halo_total_length / distance_between_waves);
       let decal = (blade_halo_total_length / quant);
       let blade_total_length = (blade_halo_total_length - decal * 1.8);
       let blade_halo_thickness = 80;
@@ -60,7 +60,6 @@ export default {
       function rdmInterval(min, max) {
         return Math.random() * (max - min) + min;
       }
-
       for (let i = 1; i <= quant - 1; ++i) {
         let thickness_ratio = (quant - i) / quant;
         let rand = i === 2 ? 0 : rdmInterval(-0.01 *(1-thickness_ratio),0.01 * (1-thickness_ratio));
@@ -80,6 +79,7 @@ export default {
         speed: 100,
         scramble: 0.007 * 500 / blade_halo_total_length,
         color: this.color,
+        debug: true,
         vectors: vect
       });
     }

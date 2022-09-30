@@ -29,7 +29,6 @@ export default {
   },
   methods:{
     updateScores: function () {
-      console.log(process.env.VUE_APP_SHEETID)
       const spreadsheetId = process.env.VUE_APP_SHEETID
       const parser = new PublicGoogleSheetsParser(spreadsheetId, process.env.VUE_APP_SHEET_SCORES_NAME)
       parser.parse().then(items => {

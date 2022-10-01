@@ -13,11 +13,16 @@ export default {
   name: "ScoreBoard",
   data() {
     return {
-      teams: [
-        {color: '#FEBF51',name: 'jedi',score:0},
-        {color: '#E97077',name: 'sith',score:0},
-        {color: '#62C5EB',name: 'rebels',score:0}
-      ]
+      teams: []
+    }
+  },
+  beforeMount() {
+    let i = 1;
+    this.teams = []
+    while (process.env['VUE_APP_TEAM_' + i + '_NAME']) {
+      this.teams
+          .push({color: process.env['VUE_APP_TEAM_' + i + '_COLOR'], name: process.env['VUE_APP_TEAM_' + i + '_NAME'], score:0})
+      i++
     }
   },
   mounted() {
@@ -33,9 +38,11 @@ export default {
       const parser = new PublicGoogleSheetsParser(spreadsheetId, process.env.VUE_APP_SHEET_SCORES_NAME)
       parser.parse().then(items => {
         items.forEach( item => {
-          this.teams.find(team => {
+          let team = this.teams.find(team => {
             return team.name.toLowerCase() === item.Equipe.toLowerCase()
-          }).score = item.Point
+          });
+          if (team)
+              team.score = item.Point
         })
       })}
   },
